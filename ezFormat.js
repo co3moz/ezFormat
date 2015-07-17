@@ -12,7 +12,7 @@ String.prototype.format = function () {
       case "scientific":
         return parseFloat(selected).toExponential(modifier);
       case "base":
-        modifier || (modifier = 10);
+        modifier || (modifier = 16);
 
         return parseInt(selected).toString(modifier);
       case "bool":
