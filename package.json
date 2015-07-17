@@ -1,0 +1,24 @@
+{
+  "name": "ezFormat",
+  "version": "1.0.0",
+  "description": "Easy string formatting script",
+  "main": "ezFormat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/co3moz/ezFormat.git"
+  },
+  "keywords": [
+    "format",
+    "string",
+    "easy"
+  ],
+  "author": "co3moz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/co3moz/ezFormat/issues"
+  },
+  "homepage": "https://github.com/co3moz/ezFormat"
+}
