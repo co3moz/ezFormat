@@ -51,7 +51,7 @@ Put opener bracket then you can give id of argument, after you can put type or j
 
 types
 -------------
-|                  | TYPE                         | HAS MODIFIER?    |
+|                  | Type                         | Has modifier?    |
  ----------------- | ---------------------------- | ------------------
 | 1                | char                         | no               |
 | 2                | bool                         | no               |
