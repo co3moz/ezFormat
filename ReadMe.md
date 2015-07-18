@@ -17,6 +17,10 @@ Just include the ezFormat ones.
 require("ezformat");
 ```
 
+for browser
+```html
+<script src="node_modules/ezformat/ezFormat.js"></script>
+```
 
 examples
 ----------------
