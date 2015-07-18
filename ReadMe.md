@@ -51,14 +51,14 @@ Put opener bracket then you can give id of argument, after you can put type or j
 
 types
 -------------
-|                  | Type                         | Has modifier?    |
- ----------------- | ---------------------------- | ------------------
-| 1                | char                         | no               |
-| 2                | bool                         | no               |
-| 3                | base                         | yes              |
-| 4                | fixed                        | yes              |
-| 5                | scientific                   | yes              |
-| 6                | json                         | yes              |
+|                  | Type                         | Has modifier?    | Also known as    |
+ ----------------- | ---------------------------- | ---------------- | ------------------
+| 1                | char                         | no               | c               |
+| 2                | bool                         | no               | b               |
+| 3                | base                         | yes              | a              |
+| 4                | fixed                        | yes              | f              |
+| 5                | scientific                   | yes              | s              |
+| 6                | json                         | yes              | j              |
 
 ### char
 
@@ -66,6 +66,9 @@ Simply makes integer to char
 
 ```javascript
 "{0:char}{1:char}{2:char}{2:char}{3:char} w{3:char}r{2:char}d".format(104, 101, 108, 111); // "hello world"
+
+// a.k.a.
+"{0:c}{1:c}{2:c}{2:c}{3:c} w{3:c}r{2:c}d".format(104, 101, 108, 111); // "hello world"
 ```
 
 ### bool
@@ -76,6 +79,9 @@ If integer == 0 then returns false, else returns 1. Also checks null => false.
 "is connected: {0:bool}".format(15); // "is connected: true"
 "is connected: {0:bool}".format(0); // "is connected: false"
 "is connected: {0:bool}".format(null); // "is connected: false"
+
+// a.k.a
+"is connected: {0:b}".format(null); // "is connected: false"
 ```
 
 ### base

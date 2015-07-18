@@ -12,6 +12,7 @@ function doTests(what, args) {
 doTests("CLEAR            {0} {1}", ["Easy", "Test"]);
 
 doTests("CHAR             {0:char}", [49]);
+doTests("CHAR aka         {0:c}", [50]);
 
 doTests("BOOL             {0:bool}", [2]);
 doTests("BOOL             {0:bool}", [0]);
