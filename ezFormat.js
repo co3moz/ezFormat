@@ -71,7 +71,7 @@
           return parseInt(selected).toString(modifier);
         case "b":
         case "bool":
-          return !!selected;
+          return selected == "null" ? false : !!selected;
         case "c":
         case "char":
           return String.fromCharCode(selected);
