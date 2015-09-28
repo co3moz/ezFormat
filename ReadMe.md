@@ -189,13 +189,13 @@ var item = {
 
 mark argument
 ```javascript
-    var first = {a: 1};
-    var second = {a: 2};
-    
-    "{0.a}{1.a}".format(first, second); // "12"
-    // or
-    "{a}{1.a}".format(first, second); // "12"
-    // 0 is default arg
+var first = {a: 1};
+var second = {a: 2};
+
+"{0.a}{1.a}".format(first, second); // "12"
+// or
+"{a}{1.a}".format(first, second); // "12"
+// 0 is default arg
 ```
 
 > **Note:** Can be cause mistakes when use array in first arg without marking.
@@ -251,6 +251,6 @@ Now you don't need to use `:` simply use space
 // compressed
 "{0:json:4def(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
 
-// normal
+// norma
 "{0 json 4 default(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
 ```
