@@ -1,8 +1,8 @@
 var ezFormat = require("./ezFormat");
 
-function doTests(what, args) {
+function doTests (what, args) {
   var now = new Date();
-  for(var i = 0; i<1000;i++) {
+  for (var i = 0; i < 1000; i++) {
     String.prototype.format.apply(what, args);
   }
   var ms = new Date() - now;
@@ -38,12 +38,33 @@ doTests("FIXED 1          {0:fixed:1}", [10.123456789]);
 doTests("FIXED 2          {0:fixed:2}", [10.123456789]);
 doTests("FIXED 3          {0:fixed:3}", [10.123456789]);
 
-doTests("JSON             {0:json}", [{TEST:1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
-doTests("JSON aka         {0:j}", [{TEST:1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
-doTests("FORMATTED JSON   {0:json:4}", [{TEST:1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
-doTests("FORMATTED JSON a {0:j:4}", [{TEST:1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
+doTests("JSON             {0:json}", [{TEST: 1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
+doTests("JSON aka         {0:j}", [{TEST: 1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
+doTests("FORMATTED JSON   {0:json:4}", [{TEST: 1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
+doTests("FORMATTED JSON a {0:j:4}", [{TEST: 1, YEAH: {IN: [1, 2, 3], MORE: 'MORE', ENOUGH: true}}]);
 
 
 doTests("COMPLEX {0} {0:char} {0:bool} {1:base} {1:base:2} 0x{1:base:16} {1:fixed} {1:fixed:3}", [55, 123.1631]);
 
-doTests("BUG TEST {{0}}  {0{0}}", [0]);
+doTests("BUG TEST {{0}}  {0{0}}", [1]);
+
+doTests("Person Test\nPerson Name: {name}\nPerson Age: {age}", [{name: "Mr. Brown", age: 33}]);
+doTests("MULTI OBJ, a: {a}, b: {1.b}", [{a: 1}, {b: 2}]);
+doTests("ARRAY TEST {.0}", [[1, 2, 3, 4, 5]]);
+doTests("TOSTRING TEST -> {0}", [{
+  a: 1, toString: function () {
+    return this.a * 2;
+  }
+}]);
+
+doTests("TOSTRING TEST 2 -> {me}", [{
+  me: {
+    a: 1, toString: function () {
+      return this.a * 2;
+    }
+  }
+}]);
+
+doTests("DEF TEST {0 def(1)}", [null, "default"]);
+doTests("DEF TEST {0 def()}", [null, "default"]);
+doTests("{0 json 4 def(1)}", [null, {error: "notExists"}]);

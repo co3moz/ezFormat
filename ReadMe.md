@@ -149,3 +149,108 @@ for pretty output
 
 ```
 
+## 1.2 updates
+
+### object
+
+Now you can use object callings
+
+> **syntax**
+> ```javascript
+> {<property>}
+> {.<property>}
+> {<index>.<property>}
+> ```
+
+```javascript
+"Person: {name}, age: {age}".format({name: "Albert Einstein", age: 18}); // "Person: Albert Einstein, age: 18"
+```
+
+supports nested object access too.
+
+```javascript
+var item = {
+    name: "Cosmos",
+    author: {
+        name: "Carl Sagan",
+        birth: "Nov 9 1934"
+    },
+    publishDate: "1980",
+    pages: 365,
+    isbn: [
+        "0-394-50294-9 (first edition)",
+        "978-0-375-50832-5(2002 edition)",
+        "978-0-345-53943-4 (2013 edition)"
+    ]
+};
+
+"Book of {name}({publishDate}), author {author.name} ({author.birth}) isbn: {isbn.0}".format(item);
+```
+
+mark argument
+```javascript
+    var first = {a: 1};
+    var second = {a: 2};
+    
+    "{0.a}{1.a}".format(first, second); // "12"
+    // or
+    "{a}{1.a}".format(first, second); // "12"
+    // 0 is default arg
+```
+
+> **Note:** Can be cause mistakes when use array in first arg without marking.
+> ```javascript
+> var array = [1, 1, 2, 3, 5, 8, 13, 21, 34];
+> "{0}".format(array); // 1,1,2,3,5,8,13,21,34
+> "{.0}".format(array); // 1
+> "{0.0}".format(array); // 1
+> ```
+
+### toString
+
+You can use toString for printing text.
+
+```javascript
+var obj = {
+    who: {
+        name: "Albert",
+        surname: "Einstein",
+        toString: function() {
+            return this.name + " " + this.surname;
+        }
+    },
+    
+    count: 5
+};
+
+"Writer: {who}, total: {count}".format(obj); // Writer: Albert Einstein, total: 5
+```
+
+### def
+If you call undefined object with accessor you probably get null, but if you need to say something can be nullable too then use def
+
+> **syntax**
+> ```javascript
+> {<body> def<ault?>(<id?>)}
+> ```
+
+```javascript
+"{0}".format(null); // "null"
+"{0 def(1)}".format(null, "default"); // "default"
+"{0 def(2)}".format(null, "default"); // ""
+"{0 def()}".format(null, "default"); // "" prints nothing if null
+"{0 def(0)}".format(null, "default"); // "" checks 0 still null so prints nothing
+"{0 json 4 def(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
+```
+
+### space
+
+Now you don't need to use `:` simply use space
+
+```javascript
+// compressed
+"{0:json:4def(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
+
+// normal
+"{0 json 4 default(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
+```
