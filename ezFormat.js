@@ -39,7 +39,7 @@
             selected = nothing;
           }
         } else {
-          if (args[id]) {
+          if (args[id] != null) {
             selected = args[id];
           }
         }
@@ -61,14 +61,14 @@
       switch (type) {
         case "f":
         case "fixed":
-          return parseFloat(selected).toFixed(modifier);
+          return parseFloat(+selected).toFixed(modifier);
         case "s":
         case "scientific":
-          return parseFloat(selected).toExponential(modifier);
+          return parseFloat(+selected).toExponential(modifier);
         case "a":
         case "base":
           modifier || (modifier = 16);
-          return parseInt(selected).toString(modifier);
+          return parseInt(+selected).toString(modifier);
         case "b":
         case "bool":
           return selected == "null" ? false : !!selected;

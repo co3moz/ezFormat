@@ -29,12 +29,16 @@ doTests("CLEAR", "{0} {1}", ["Easy", "Test"], "Easy Test");
 doTests("CHAR", "{0:char}", [49], "1");
 doTests("CHAR aka", "{0:c}", [50], "2");
 
-doTests("BOOL", "{0:bool}", [2], "true");
-doTests("BOOL", "{0:bool}", [0], "false");
+doTests("BOOL1", "{0:bool}", [2], "true");
+doTests("BOOL2", "{0:bool}", [0], "false");
+doTests("BOOL3", "{0:bool}", [true], "true");
+doTests("BOOL4", "{0:bool}", [false], "false");
 doTests("BOOL aka", "{0:b}", [0], "false");
 doTests("BOOL aka", "{0:b}", [null], "false");
 
 doTests("BASE N", "{0:base}", [1023], "3ff");
+doTests("BASE 10", "{0:base:10}", [false], "0");
+doTests("BASE 10", "{0:base:10}", [true], "1");
 doTests("BASE 2", "{0:base:2}", [1023], "1111111111");
 doTests("BASE 2 aka", "{0:a:2}", [1023], "1111111111");
 doTests("BASE 3", "{0:base:3}", [1023], "1101220");
@@ -50,6 +54,8 @@ doTests("SCIENTIFIC 3", "{0:scientific:3}", [10.123456789], "1.012e+1");
 
 doTests("FIXED N", "{0:fixed}", [10.123456789], "10");
 doTests("FIXED N aka", "{0:f}", [10.123456789], "10");
+doTests("FIXED N aka", "{0:f}", [true], "1");
+doTests("FIXED N aka", "{0:f}", [false], "0");
 doTests("FIXED 1", "{0:fixed:1}", [10.123456789], "10.1");
 doTests("FIXED 2", "{0:fixed:2}", [10.123456789], "10.12");
 doTests("FIXED 3", "{0:fixed:3}", [10.123456789], "10.123");
