@@ -105,6 +105,8 @@ doTests("TOSTRING TEST 2", "{me}", [{
 doTests("DEF TEST", "{0 def(1)}", [null, "default"], "default");
 doTests("DEF TEST", "{0 def()}", [null, "default"], "");
 doTests("DEF TEST", "{0 json 4 def(1)}", [null, {error: "notExists"}], "{\n    \"error\": \"notExists\"\n}");
+doTests("IGNORE TEST", "{0} ~ignore{1}", ["Easy", "Test"], "Easy {1}");
+doTests("IGNORE TEST2", "{0} ~ignore{1} {1} ~ignore{2} {2}", ["Easy", "Test", "Life"], "Easy {1} Test {2} Life");
 
 console.log = old;
 console.log("total ng count: {ng}/{total}".format({total: ng + ok, ng: ng}));
@@ -113,7 +115,7 @@ console.log("total ng count: {ng}/{total}".format({total: ng + ok, ng: ng}));
     if (ng > 0) {
       console.error("test failed!");
     } else {
-      console.log("test successfull!");
+      console.log("test successful!");
     }
 
     push.forEach(function(e) {

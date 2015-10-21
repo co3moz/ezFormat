@@ -1,15 +1,11 @@
 (function () {
-  var formatReg = /\{ *([\w\.]+) *(?:(?::|(?: +)) *([\d\w]+))? *(?:(?::|(?: +)) *([\d\w]+))? *(?:def(?:ault)?\((\w*)\))? *}/g;
+  var formatReg = /(~ignore)?\{ *([\w\.]+) *(?:(?::|(?: +)) *([\d\w]+))? *(?:(?::|(?: +)) *([\d\w]+))? *(?:def(?:ault)?\((\w*)\))? *}/g;
 
-  function fetchFromObject (obj, prop) { // thanks to "Prusprus" url: http://jsfiddle.net/amofb8xa/8/
+  function fetchFromObject(obj, prop, _index) { // thanks to "Prusprus" url: http://jsfiddle.net/amofb8xa/8/
     if (typeof obj === 'undefined') return false;
-
-    var _index = prop.indexOf('.');
-
-    if (_index > -1) {
+    if ((_index = prop.indexOf('.')) > -1) {
       return fetchFromObject(obj[prop.substring(0, _index)], prop.substr(_index + 1));
     }
-
     return obj[prop];
   }
 
@@ -17,7 +13,11 @@
 
   String.prototype.format = function () {
     var args = arguments;
-    return this.replace(formatReg, function (match, id, type, modifier, def) {
+    return this.replace(formatReg, function (match, ignore, id, type, modifier, def) {
+      if (ignore) {
+        return match.substring(7);
+      }
+
       var selected;
 
       if (id.indexOf(".") != -1) { // has access modifier?
@@ -26,7 +26,7 @@
         if (!isNaN(+split[0])) {
           line = split.shift();
         }
-        if(line == "") {
+        if (line == "") {
           line = 0;
         }
         selected = fetchFromObject(args[line], split.join("."));
@@ -47,8 +47,8 @@
 
 
       if (selected == null) {
-        if(def != null) {
-          if(def == "") {
+        if (def != null) {
+          if (def == "") {
             selected = "";
           } else {
             selected = args[def] || "";

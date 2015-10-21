@@ -251,6 +251,15 @@ Now you don't need to use `:` simply use space
 // compressed
 "{0:json:4def(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
 
-// norma
+// normal
 "{0 json 4 default(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
 ```
+
+## 1.3 updates
+### ignore
+If you set something ignored (`~ignore`) then, ezFormat won't format just jumps.
+
+```javascript
+"this will be formatted: {0}, this won't ~ignore{0}".format("me!"); // "this will be formatted: me!, this won't {0}"
+```
+
