@@ -59,24 +59,6 @@
         }
       }
 
-      if(selected.constructor == Function) {
-        if(call != null) {
-          if(call == "") {
-            selected = selected();
-          } else {
-            if(args[call] == null) {
-              selected = selected();
-            } else {
-              if(args[call].constructor == Array) {
-                selected = selected.apply()
-              } else {
-                selected = selected(args[call]);
-              }
-            }
-          }
-        }
-      }
-
       switch (type) {
         case "f":
         case "fixed":
