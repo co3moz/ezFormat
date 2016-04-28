@@ -107,15 +107,9 @@ doTests("TOSTRING TEST 2", "{me}", [{
 doTests("DEF TEST", "{0 def(1)}", [null, "default"], "default");
 doTests("DEF TEST", "{0 def()}", [null, "default"], "");
 doTests("DEF TEST", "{0 json 4 def(1)}", [null, {error: "notExists"}], "{\n    \"error\": \"notExists\"\n}");
+doTests("IGNORE TEST", "{0} ~ignore{1}", ["Easy", "Test"], "Easy {1}");
+doTests("IGNORE TEST2", "{0} ~ignore{1} {1} ~ignore{2} {2}", ["Easy", "Test", "Life"], "Easy {1} Test {2} Life");
 
-doTests("FUNCTION IN OBJECT TEST", "Person Name: {name call()}, Person Age: {age call()}", [{
-  name: function () {
-    return "Mr. Brown";
-  },
-  age: function () {
-    return 33;
-  }
-}], "Person Name: Mr. Brown, Person Age: 33");
 
 doTests("PADDING 1", "{0:padding:3}", [55], "055");
 
