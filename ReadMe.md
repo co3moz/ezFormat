@@ -63,6 +63,7 @@ types
 | 4                | fixed                        | yes              | f              |
 | 5                | scientific                   | yes              | s              |
 | 6                | json                         | yes              | j              |
+| 7                | padding                      | yes              | p              |
 
 ### char
 
@@ -149,7 +150,7 @@ for pretty output
 
 ```
 
-## 1.2 updates
+## 1.2 update
 
 ### object
 
@@ -243,6 +244,31 @@ If you call undefined object with accessor you probably get null, but if you nee
 "{0 json 4 def(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
 ```
 
+### call
+If you give function to argument, and you want to execute function and print returned data use call
+
+> **syntax**
+> ```javascript
+> {<body> default() call(<id?>)}
+> ```
+> **Note** use call after default.
+
+```javascript
+function Test(i) { 
+  if(i == undefined) { 
+    return 1; 
+  }
+  
+  return i * 2; 
+}
+
+"{0}".format(Test); // "function ..."
+"{0 call()}".format(Test); // "1"
+"{0 call(1)}".format(Test, 2); // "4"
+```
+
+> **Note**: unstable please don't use until 1.3.1
+
 ### space
 
 Now you don't need to use `:` simply use space
@@ -253,4 +279,14 @@ Now you don't need to use `:` simply use space
 
 // norma
 "{0 json 4 default(1)}".format(null, {error: "notExists"}); // "{\n\t\"error\": \"notExists\"\n}"
+```
+
+## 1.3 update
+
+### padding
+
+makes left padding
+
+```javascript
+"Padding: {0:padding:5}".format(13); // "Padding: 00013"
 ```

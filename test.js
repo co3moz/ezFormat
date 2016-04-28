@@ -2,11 +2,12 @@ var ezFormat = require("./ezFormat");
 
 var old = console.log;
 var push = [];
-console.log = function(text) {
+console.log = function (text) {
   push.push(text);
 };
 
 var ok = 0, ng = 0;
+var ngResults = [];
 function doTests (name, what, args, mustBe) {
   var now = new Date();
   for (var i = 0; i < 1000; i++) {
@@ -16,10 +17,11 @@ function doTests (name, what, args, mustBe) {
   var result = String.prototype.format.apply(what, args);
   if (result == mustBe) {
     ok++;
-    result = "OK";
+    result = "  ";
   } else {
     ng++;
-    result = "NG"
+    ngResults.push({name: name, data: result, expected: mustBe});
+    result = "NG";
   }
   console.log("{0} ms {1} {2}".format(ms, result, name));
 }
@@ -106,17 +108,30 @@ doTests("DEF TEST", "{0 def(1)}", [null, "default"], "default");
 doTests("DEF TEST", "{0 def()}", [null, "default"], "");
 doTests("DEF TEST", "{0 json 4 def(1)}", [null, {error: "notExists"}], "{\n    \"error\": \"notExists\"\n}");
 
+doTests("FUNCTION IN OBJECT TEST", "Person Name: {name call()}, Person Age: {age call()}", [{
+  name: function () {
+    return "Mr. Brown";
+  },
+  age: function () {
+    return 33;
+  }
+}], "Person Name: Mr. Brown, Person Age: 33");
+
+doTests("PADDING 1", "{0:padding:3}", [55], "055");
+
 console.log = old;
-console.log("total ng count: {ng}/{total}".format({total: ng + ok, ng: ng}));
+setTimeout(function () {
+  if (ng > 0) {
 
-  setTimeout(function () {
-    if (ng > 0) {
-      console.error("test failed!");
-    } else {
-      console.log("test successfull!");
-    }
-
-    push.forEach(function(e) {
-      console.log(e);
+    ngResults.forEach(function (res) {
+      console.error(res.name + " FAILED!");
+      console.log("-----------EXPECTED--------------");
+      console.log(res.expected);
+      console.log("----------- RESULT --------------");
+      console.log(res.data);
+      console.log();
     });
-  }, 1);
+  } else {
+    console.log("test successful!");
+  }
+}, 1);

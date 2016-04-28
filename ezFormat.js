@@ -1,5 +1,5 @@
 (function () {
-  var formatReg = /\{ *([\w\.]+) *(?:(?::|(?: +)) *([\d\w]+))? *(?:(?::|(?: +)) *([\d\w]+))? *(?:def(?:ault)?\((\w*)\))? *}/g;
+  var formatReg = /\{ *([\w\.]+) *(?:(?::|(?: +)) *([\d\w]+))? *(?:(?::|(?: +)) *([\d\w]+))? *(?:def(?:ault)?\((\w*)\))? *(?:call\((\w*)\))? *}/g;
 
   function fetchFromObject (obj, prop) { // thanks to "Prusprus" url: http://jsfiddle.net/amofb8xa/8/
     if (typeof obj === 'undefined') return false;
@@ -17,7 +17,7 @@
 
   String.prototype.format = function () {
     var args = arguments;
-    return this.replace(formatReg, function (match, id, type, modifier, def) {
+    return this.replace(formatReg, function (match, id, type, modifier, def, call) {
       var selected;
 
       if (id.indexOf(".") != -1) { // has access modifier?
@@ -58,10 +58,32 @@
         }
       }
 
+      if(selected.constructor == Function) {
+        if(call != null) {
+          if(call == "") {
+            selected = selected();
+          } else {
+            if(args[call] == null) {
+              selected = selected();
+            } else {
+              if(args[call].constructor == Array) {
+                selected = selected.apply()
+              } else {
+                selected = selected(args[call]);
+              }
+            }
+          }
+        }
+      }
+
       switch (type) {
         case "f":
         case "fixed":
           return parseFloat(+selected).toFixed(modifier);
+        case "p":
+        case "padding":
+          var text = parseInt(+selected).toString();
+          return Array(modifier - text.length + 1).join("0") + text;
         case "s":
         case "scientific":
           return parseFloat(+selected).toExponential(modifier);
